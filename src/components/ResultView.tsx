@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import { MBTI_LABELS, type MbtiStat } from "@/lib/scoring";
+import { shareOrCopy } from "@/lib/share";
 
 type Props = {
   ownerName: string;
@@ -30,6 +31,7 @@ export function ResultView({
   const cardRef = useRef<HTMLDivElement>(null);
   const [saving, setSaving] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [sharedHint, setSharedHint] = useState(false);
 
   const highlightMbti = latest?.mbti ?? stats.top[0]?.mbti ?? "————";
   const label = MBTI_LABELS[highlightMbti] ?? "대기 중";
@@ -57,6 +59,22 @@ export function ResultView({
     await navigator.clipboard.writeText(url);
     setCopied(true);
     setTimeout(() => setCopied(false), 1600);
+  }
+
+  async function shareTest() {
+    const url = `${window.location.origin}${sharePath}`;
+    const result = await shareOrCopy({
+      title: `${ownerName}님 남BTI`,
+      text: `${ownerName}님을 어떤 유형으로 보나요? 링크에서 답해 주세요.`,
+      url,
+    });
+    if (result === "copied") {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    } else if (result === "shared") {
+      setSharedHint(true);
+      setTimeout(() => setSharedHint(false), 1600);
+    }
   }
 
   return (
@@ -164,6 +182,9 @@ export function ResultView({
               className="btn-primary"
             >
               {saving ? "저장 중…" : "이미지로 저장"}
+            </button>
+            <button type="button" onClick={shareTest} className="btn-ghost">
+              {sharedHint ? "공유됨" : "테스트 공유하기"}
             </button>
             <button type="button" onClick={copyShare} className="btn-ghost">
               {copied ? "링크 복사됨" : "공유 링크 복사"}

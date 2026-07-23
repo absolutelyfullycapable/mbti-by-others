@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
+import { shareOrCopy } from "@/lib/share";
 
 type Created = {
   sharePath: string;
@@ -16,6 +17,7 @@ export function CreateForm({ intro }: { intro?: ReactNode }) {
   const [error, setError] = useState("");
   const [created, setCreated] = useState<Created | null>(null);
   const [copied, setCopied] = useState<"share" | "result" | null>(null);
+  const [sharedHint, setSharedHint] = useState<"share" | "result" | null>(null);
   const [origin, setOrigin] = useState("");
 
   useEffect(() => {
@@ -53,6 +55,23 @@ export function CreateForm({ intro }: { intro?: ReactNode }) {
     setTimeout(() => setCopied(null), 1800);
   }
 
+  async function share(
+    kind: "share" | "result",
+    path: string,
+    title: string,
+    text: string,
+  ) {
+    const url = `${window.location.origin}${path}`;
+    const result = await shareOrCopy({ title, text, url });
+    if (result === "copied") {
+      setCopied(kind);
+      setTimeout(() => setCopied(null), 1800);
+    } else if (result === "shared") {
+      setSharedHint(kind);
+      setTimeout(() => setSharedHint(null), 1800);
+    }
+  }
+
   if (created) {
     return (
       <div className="anim-rise space-y-8">
@@ -74,7 +93,16 @@ export function CreateForm({ intro }: { intro?: ReactNode }) {
           origin={origin}
           path={created.sharePath}
           copied={copied === "share"}
+          shared={sharedHint === "share"}
           onCopy={() => copy("share", created.sharePath)}
+          onShare={() =>
+            share(
+              "share",
+              created.sharePath,
+              `${created.ownerName}님 남BTI`,
+              `${created.ownerName}님을 어떤 유형으로 보나요? 링크에서 답해 주세요.`,
+            )
+          }
           actionLabel="미리보기"
           onAction={() => router.push(created.sharePath)}
         />
@@ -85,7 +113,16 @@ export function CreateForm({ intro }: { intro?: ReactNode }) {
           origin={origin}
           path={created.resultPath}
           copied={copied === "result"}
+          shared={sharedHint === "result"}
           onCopy={() => copy("result", created.resultPath)}
+          onShare={() =>
+            share(
+              "result",
+              created.resultPath,
+              `${created.ownerName}님 남BTI 결과`,
+              `${created.ownerName}님 결과·통계 링크예요. (본인만 보관하세요)`,
+            )
+          }
           actionLabel="결과 열기"
           onAction={() => router.push(created.resultPath)}
           emphasize
@@ -131,7 +168,9 @@ function LinkBlock({
   origin,
   path,
   copied,
+  shared,
   onCopy,
+  onShare,
   actionLabel,
   onAction,
   emphasize,
@@ -141,7 +180,9 @@ function LinkBlock({
   origin: string;
   path: string;
   copied: boolean;
+  shared: boolean;
   onCopy: () => void;
+  onShare: () => void;
   actionLabel: string;
   onAction: () => void;
   emphasize?: boolean;
@@ -163,7 +204,10 @@ function LinkBlock({
         {path}
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
-        <button type="button" onClick={onCopy} className="btn-primary px-4 py-2.5 text-sm">
+        <button type="button" onClick={onShare} className="btn-primary px-4 py-2.5 text-sm">
+          {shared ? "공유됨" : copied ? "복사됨" : "공유하기"}
+        </button>
+        <button type="button" onClick={onCopy} className="btn-ghost px-4 py-2.5 text-sm">
           {copied ? "복사됨" : "복사"}
         </button>
         <button type="button" onClick={onAction} className="btn-ghost px-4 py-2.5 text-sm">

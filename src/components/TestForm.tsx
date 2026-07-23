@@ -116,7 +116,7 @@ export function TestForm({ slug, ownerName }: Props) {
           onClick={() => setStep("quiz")}
           className="btn-primary w-full sm:w-auto sm:min-w-[200px]"
         >
-          60문항 시작
+          24문항 시작
         </button>
       </div>
     );
