@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { shareOrCopy } from "@/lib/share";
 
@@ -24,7 +24,7 @@ export function CreateForm({ intro }: { intro?: ReactNode }) {
     setOrigin(window.location.origin);
   }, []);
 
-  async function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault();
     setError("");
     setLoading(true);
