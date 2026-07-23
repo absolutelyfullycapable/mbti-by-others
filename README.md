@@ -6,6 +6,8 @@
 
 ## 배포 주소
 
+![남BTI 홈 화면](docs/home-preview.jpg)
+
 [mbti-by-others.vercel.app](https://mbti-by-others.vercel.app)
 
 ---
