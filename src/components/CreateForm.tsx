@@ -48,13 +48,6 @@ export function CreateForm({ intro }: { intro?: ReactNode }) {
     }
   }
 
-  async function copy(kind: "share" | "result", path: string) {
-    const url = `${window.location.origin}${path}`;
-    await navigator.clipboard.writeText(url);
-    setCopied(kind);
-    setTimeout(() => setCopied(null), 1800);
-  }
-
   async function share(
     kind: "share" | "result",
     path: string,
@@ -94,7 +87,6 @@ export function CreateForm({ intro }: { intro?: ReactNode }) {
           path={created.sharePath}
           copied={copied === "share"}
           shared={sharedHint === "share"}
-          onCopy={() => copy("share", created.sharePath)}
           onShare={() =>
             share(
               "share",
@@ -114,7 +106,6 @@ export function CreateForm({ intro }: { intro?: ReactNode }) {
           path={created.resultPath}
           copied={copied === "result"}
           shared={sharedHint === "result"}
-          onCopy={() => copy("result", created.resultPath)}
           onShare={() =>
             share(
               "result",
@@ -169,7 +160,6 @@ function LinkBlock({
   path,
   copied,
   shared,
-  onCopy,
   onShare,
   actionLabel,
   onAction,
@@ -181,7 +171,6 @@ function LinkBlock({
   path: string;
   copied: boolean;
   shared: boolean;
-  onCopy: () => void;
   onShare: () => void;
   actionLabel: string;
   onAction: () => void;
@@ -206,9 +195,6 @@ function LinkBlock({
       <div className="mt-4 flex flex-wrap gap-2">
         <button type="button" onClick={onShare} className="btn-primary px-4 py-2.5 text-sm">
           {shared ? "공유됨" : copied ? "복사됨" : "공유하기"}
-        </button>
-        <button type="button" onClick={onCopy} className="btn-ghost px-4 py-2.5 text-sm">
-          {copied ? "복사됨" : "복사"}
         </button>
         <button type="button" onClick={onAction} className="btn-ghost px-4 py-2.5 text-sm">
           {actionLabel}

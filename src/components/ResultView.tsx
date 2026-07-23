@@ -54,13 +54,6 @@ export function ResultView({
     }
   }, [ownerName, highlightMbti]);
 
-  async function copyShare() {
-    const url = `${window.location.origin}${sharePath}`;
-    await navigator.clipboard.writeText(url);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1600);
-  }
-
   async function shareTest() {
     const url = `${window.location.origin}${sharePath}`;
     const result = await shareOrCopy({
@@ -174,20 +167,21 @@ export function ResultView({
             )}
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-nowrap gap-1.5 sm:gap-2">
             <button
               type="button"
               onClick={saveImage}
               disabled={saving}
-              className="btn-primary"
+              className="btn-primary min-w-0 flex-1 px-2 py-2.5 text-xs sm:px-3 sm:text-sm"
             >
-              {saving ? "저장 중…" : "이미지로 저장"}
+              {saving ? "저장 중…" : "이미지 저장"}
             </button>
-            <button type="button" onClick={shareTest} className="btn-ghost">
-              {sharedHint ? "공유됨" : "테스트 공유하기"}
-            </button>
-            <button type="button" onClick={copyShare} className="btn-ghost">
-              {copied ? "링크 복사됨" : "공유 링크 복사"}
+            <button
+              type="button"
+              onClick={shareTest}
+              className="btn-ghost min-w-0 flex-1 px-2 py-2.5 text-xs sm:px-3 sm:text-sm"
+            >
+              {sharedHint ? "공유됨" : copied ? "복사됨" : "공유하기"}
             </button>
           </div>
         </div>
