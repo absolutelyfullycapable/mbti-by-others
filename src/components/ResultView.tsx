@@ -105,7 +105,7 @@ export function ResultView({
                 </p>
               </div>
               <p
-                className="inline-flex items-baseline text-[1.35rem] font-bold leading-none text-[var(--ink)]"
+                className="inline-flex shrink-0 items-baseline whitespace-nowrap text-[1.35rem] font-bold leading-none text-[var(--ink)]"
                 style={{ fontFamily: "var(--font-brand)" }}
               >
                 남BTI

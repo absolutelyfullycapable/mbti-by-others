@@ -1,17 +1,12 @@
-# 남BTI 🙋🏻‍♀️
+# 남BTI ✍🏻
 
 남이 보는 내 MBTI — 주변 사람들이 나를 어떤 유형으로 보는지 모아 보는 테스트.
 
 ---
 
-## 실행
+## 배포 주소
 
-```bash
-npm install
-npm run dev
-```
-
-[http://localhost:3000](http://localhost:3000)
+[mbti-by-others.vercel.app](https://mbti-by-others.vercel.app)
 
 ---
 
@@ -107,20 +102,3 @@ mbti-by-others/
 ├── questions-ko.json         # 재작성 문항 원본
 └── package.json
 ```
-
----
-
-## 데이터 · 환경변수
-
-Supabase 프로젝트: `mbti-by-others` (ap-northeast-2)
-
-로컬: `.env.local` (git 제외)  
-예시: `.env.example`
-
-```bash
-NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
-SUPABASE_ANON_KEY=eyJ...          # 또는
-SUPABASE_SERVICE_ROLE_KEY=eyJ...  # 권장 (대시보드 API Keys)
-```
-
-Vercel: Project Settings → Environment Variables에 위 값을 동일하게 추가하세요.
