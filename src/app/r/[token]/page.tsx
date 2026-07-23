@@ -8,7 +8,7 @@ export default async function ResultPage({ params }: Props) {
   const { token } = await params;
 
   return (
-    <main className="mx-auto w-full max-w-2xl flex-1 px-5 py-6 sm:px-8 sm:py-8">
+    <main className="mx-auto w-full max-w-3xl flex-1 px-5 pb-16 pt-6 sm:px-8 sm:pt-8">
       <SiteHeader subtle />
       <Suspense
         fallback={

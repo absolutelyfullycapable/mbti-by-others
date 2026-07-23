@@ -11,7 +11,7 @@ export function BrandMark({
 }) {
   const sizeClass =
     size === "hero"
-      ? "text-[clamp(4.5rem,16vw,7.5rem)] leading-none"
+      ? "text-[clamp(5.75rem,22vw,7.5rem)] leading-none"
       : size === "lg"
         ? "text-4xl leading-none"
         : "text-[1.75rem] leading-none";

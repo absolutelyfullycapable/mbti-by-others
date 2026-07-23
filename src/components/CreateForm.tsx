@@ -55,7 +55,7 @@ export function CreateForm({ intro }: { intro?: ReactNode }) {
 
   if (created) {
     return (
-      <div className="anim-rise max-w-md space-y-8">
+      <div className="anim-rise space-y-8">
         <div>
           <p className="text-xs font-medium uppercase tracking-[0.16em] text-[var(--muted)]">
             Link ready
@@ -97,10 +97,10 @@ export function CreateForm({ intro }: { intro?: ReactNode }) {
   return (
     <>
       {intro}
-      <form onSubmit={onSubmit} className="anim-rise-delay-2 mt-12 max-w-md space-y-8">
+      <form onSubmit={onSubmit} className="anim-rise-delay-2 mt-12 space-y-8">
         <label className="block">
           <span className="text-xs font-medium uppercase tracking-[0.16em] text-[var(--muted)]">
-            Your name
+            내 이름
           </span>
           <input
             value={name}
