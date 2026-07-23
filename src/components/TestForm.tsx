@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ANSWER_SCALE, QUESTIONS } from "@/data/questions";
 import { formatQuestion } from "@/lib/josa";
@@ -14,6 +14,7 @@ type Props = {
 
 export function TestForm({ slug, ownerName }: Props) {
   const router = useRouter();
+  const topRef = useRef<HTMLDivElement>(null);
   const [step, setStep] = useState<"intro" | "quiz">("intro");
   const [respondentName, setRespondentName] = useState("");
   const [page, setPage] = useState(0);
@@ -32,6 +33,17 @@ export function TestForm({ slug, ownerName }: Props) {
   const pageComplete = slice.every((q) => answers[q.number - 1] !== null);
   const answeredCount = answers.filter((a) => a !== null).length;
 
+  useEffect(() => {
+    if (step !== "quiz") return;
+    // PC에서는 버튼 포커스가 스크롤을 다시 아래로 당기는 경우가 있어
+    // 렌더 이후에 상단으로 맞춘다.
+    const id = window.requestAnimationFrame(() => {
+      topRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    });
+    return () => window.cancelAnimationFrame(id);
+  }, [page, step]);
+
   function setAnswer(index: number, value: number) {
     setAnswers((prev) => {
       const next = [...prev];
@@ -41,8 +53,10 @@ export function TestForm({ slug, ownerName }: Props) {
   }
 
   function goToPage(next: number) {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
     setPage(next);
-    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   async function submit() {
@@ -123,7 +137,10 @@ export function TestForm({ slug, ownerName }: Props) {
   }
 
   return (
-    <div className="w-full max-w-md space-y-5 sm:max-w-none sm:space-y-8">
+    <div
+      ref={topRef}
+      className="w-full max-w-md space-y-5 sm:max-w-none sm:space-y-8"
+    >
       <div className="flex items-end justify-between gap-4">
         <div className="min-w-0 flex-1">
           <p className="text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
