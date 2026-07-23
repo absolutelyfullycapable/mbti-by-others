@@ -17,9 +17,9 @@ npm run dev
 |------|------|
 | 프레임워크 | Next.js 16 (App Router) · React 19 · TypeScript |
 | 스타일 | Tailwind CSS 4 · Pretendard · Dongle · Syne |
-| 상태/저장 | 로컬 `data/store.json` (파일 기반, 로그인 없음) |
+| 상태/저장 | **Supabase** (Postgres) · 로컬/배포 동일 |
 | 유틸 | nanoid (링크 ID) · html-to-image (결과 PNG 저장) |
-| 배포 예정 | Vercel + (추후) Supabase 등 DB |
+| 배포 | Vercel + Supabase 환경변수 |
 
 ## 기능
 
@@ -80,12 +80,23 @@ mbti-by-others/
 │   │       └── results/[token]/       # 결과 집계
 │   ├── components/           # UI (CreateForm, TestForm, ResultView …)
 │   ├── data/questions.ts     # 60문항 + 축 매핑
-│   └── lib/                  # josa · scoring · store
+│   └── lib/                  # josa · scoring · store · supabase
+├── .env.example              # 환경변수 예시
 ├── questions-ko.json         # 재작성 문항 원본
 └── package.json
 ```
 
-## 데이터
+## 데이터 · 환경변수
 
-로컬: `data/store.json`  
-배포 시에는 DB(Supabase 등) 연동이 필요합니다.
+Supabase 프로젝트: `mbti-by-others` (ap-northeast-2)
+
+로컬: `.env.local` (git 제외)  
+예시: `.env.example`
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+SUPABASE_ANON_KEY=eyJ...          # 또는
+SUPABASE_SERVICE_ROLE_KEY=eyJ...  # 권장 (대시보드 API Keys)
+```
+
+Vercel: Project Settings → Environment Variables에 위 값을 동일하게 추가하세요.
