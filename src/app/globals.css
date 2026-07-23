@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #ffffff;
+  --bg-2: #f5f5f5;
+  --ink: #0a0a0a;
+  --muted: #737373;
+  --card: #ffffff;
+  --accent: #f4c2c2;
+  --accent-ink: #0a0a0a;
+  --signal: #0a0a0a;
+  --soft: #ececec;
+  --line: rgba(10, 10, 10, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, sans-serif;
+  --font-display: var(--font-display);
+  --font-brand: var(--font-brand);
+}
+
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 100% 0%, rgba(244, 194, 194, 0.45), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 0% 100%, rgba(244, 194, 194, 0.22), transparent 50%);
+  background-attachment: fixed;
+  color: var(--ink);
+  min-height: 100dvh;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes brand-in {
+  from {
+    opacity: 0;
+    letter-spacing: 0.2em;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    letter-spacing: -0.02em;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.anim-rise {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.anim-rise-delay {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+.anim-rise-delay-2 {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both;
+}
+
+.anim-brand {
+  animation: brand-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.stat-bar {
+  transform-origin: left center;
+  animation: bar-grow 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.input-line {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid var(--ink);
+  background: transparent;
+  padding: 0.85rem 0;
+  font-size: 1.35rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.input-line:focus {
+  border-color: var(--accent);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  color: #fff;
+  padding: 0.95rem 1.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--accent-ink);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--ink);
+  padding: 0.85rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1.5px solid var(--line);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  border-color: var(--ink);
+  background: var(--bg-2);
+}
+
+.btn-ghost:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pill-accent {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--ink);
+  padding: 0.2rem 0.55rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
