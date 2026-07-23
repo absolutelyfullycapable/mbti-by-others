@@ -2,11 +2,11 @@
 
 남이 보는 내 MBTI — 주변 사람들이 나를 어떤 유형으로 보는지 모아 보는 테스트.
 
+![남BTI 홈 화면](docs/home-preview.png)
+
 ---
 
 ## 배포 주소
-
-![남BTI 홈 화면](docs/home-preview.jpg)
 
 [mbti-by-others.vercel.app](https://mbti-by-others.vercel.app)
 
